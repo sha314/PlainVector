@@ -120,7 +120,7 @@ class Vector:
     def crossProduct(self, vec1, vec2):
 
         pass
-    
+
     def norm(self):
         sum_of_squared = 0
         for elm in self.vec:
