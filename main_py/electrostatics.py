@@ -13,6 +13,14 @@ def electricField(chargeQ, vectorFromOrigin):
         tempb = vectorFromOrigin / norm**3
         return tempa * tempb
 
+def electricField_one_infinite_sheet(density_sigma):
+
+    return density_sigma / (2. * epsilon_naught_full)
+
+def electricField_one_infinite_sheet_vector(density_sigma, positionOfSheet, positionVectorAtP):
+
+    pass
+
 
 def test():
     print("test : ", __file__)

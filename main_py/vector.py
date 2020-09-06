@@ -112,14 +112,17 @@ class Vector:
         return sum_vec
 
     @staticmethod
-    def dotProduct(self, vec1, vec2):
+    def dotProduct(vec1, vec2):
 
         pass
 
     @staticmethod
-    def crossProduct(self, vec1, vec2):
-
-        pass
+    def crossProduct(vec1, vec2):
+        vec3 = [0]*3
+        vec3[0] = vec1[1] * vec2[2] - vec2[1] * vec1[2]
+        vec3[1] =-vec1[0] * vec2[2] + vec2[0] * vec1[2]
+        vec3[2] = vec1[0] * vec2[1] - vec2[0] * vec1[1]
+        return Vector(vec3)
 
     def norm(self):
         sum_of_squared = 0
@@ -192,5 +195,10 @@ def test():
     print("y component ", vec1[1])
     print("z component ", vec1[2])
 
-
-
+    print("cross product")
+    vec1 = Vector([1, -2, 3])
+    vec2 = Vector([-1, 3, -2])
+    print("vec 1 ", vec1)
+    print("vec 2 ", vec2)
+    vec3 = Vector.crossProduct(vec1, vec2)
+    print("vec 3 ", vec3)

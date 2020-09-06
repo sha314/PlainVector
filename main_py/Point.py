@@ -12,3 +12,10 @@ class Point:
             distance += (self.coordinate[i] - pointB.coordinate[i])**2
             pass
         return math.sqrt(distance)
+
+    pass
+
+def distance_btn_planes(self, planeA=(0, None, None), planeB=(10, None, None)):
+    # planeA and planeB both are in yz plane
+
+    pass
