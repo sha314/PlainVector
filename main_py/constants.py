@@ -22,3 +22,7 @@ charge_of_electron_factor=1e-19
 charge_of_electron_full = charge_of_electron*charge_of_electron_factor
 
 
+# magnetic Permeability
+mu_naught = 4*pi_value # in Henry/meter or S.I.
+mu_naught_factor = 1e-7
+mu_naught_full = mu_naught*mu_naught_factor
