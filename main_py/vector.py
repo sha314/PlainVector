@@ -1,6 +1,7 @@
 import math
 
-
+def levi_civita(i, j, k):
+    return (i-j)*(j-k)*(k-i)/2
 
 class Vector:
     def __init__(self, vec_a):
@@ -124,6 +125,20 @@ class Vector:
         vec3[2] = vec1[0] * vec2[1] - vec2[0] * vec1[1]
         return Vector(vec3)
 
+    @staticmethod
+    def crossProduct_v2(vec1, vec2):
+        vec3 = [0] * 3
+        for i in range(len(vec3)):
+            for j in range(len(vec1)):
+                for k in range(len(vec2)):
+                    eps = levi_civita(i+1, j+1, k+1)
+                    # print(eps)
+                    vec3[i] += eps*vec1[j]*vec2[k]
+                    pass
+                pass
+            pass
+        return Vector(vec3)
+
     def norm(self):
         sum_of_squared = 0
         for elm in self.vec:
@@ -201,4 +216,6 @@ def test():
     print("vec 1 ", vec1)
     print("vec 2 ", vec2)
     vec3 = Vector.crossProduct(vec1, vec2)
+    print("vec 3 ", vec3)
+    vec3 = Vector.crossProduct_v2(vec1, vec2)
     print("vec 3 ", vec3)
