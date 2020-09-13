@@ -7,3 +7,9 @@ def sign():
         return 1
     else:
         return -1
+
+
+def choose_from_list(in_list):
+    num = len(in_list)
+    a = random.randint(0, num-1)
+    return in_list[a]
