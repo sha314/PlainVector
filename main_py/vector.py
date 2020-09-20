@@ -93,6 +93,12 @@ class Vector:
             return None
         return self.vec[index]
 
+    def __setitem__(self, index, value):
+        if index >= self.len:
+            print("Out of range")
+            return None
+        self.vec[index] = value
+
     def __str__(self):
         string = "{}".format(self.vec)
         return string
@@ -164,7 +170,7 @@ class Vector:
         for elm in self.vec:
             out_vec.append(func(elm))
             pass
-        return out_vec
+        return Vector(out_vec)
 
 
 def test():

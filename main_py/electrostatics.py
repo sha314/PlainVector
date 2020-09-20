@@ -1,6 +1,6 @@
 from main_py.constants import *
 from main_py.vector import Vector
-
+import math
 
 def electricField(chargeQ, vectorFromOrigin):
     tempa = coulomb_constant_full * chargeQ
@@ -21,6 +21,11 @@ def electricField_one_infinite_sheet_vector(density_sigma, positionOfSheet, posi
 
     pass
 
+def electric_field_mag_rod_symmetry_axis(charge_q, r_source_to_point, rod_length):
+    a = coulomb_constant_full*charge_q / r_source_to_point
+    b = math.sqrt(r_source_to_point**2 + (rod_length/2)**2)
+    return a / b
+    pass
 
 def test():
     print("test : ", __file__)

@@ -19,10 +19,16 @@ def test_utils():
     print(utils.sign())
 
 
+def test_linear_algebra():
+    from main_py import linear_algebra
+    linear_algebra.test()
+
+
 def main():
-    test_vector()
-    test_electrostatics()
-    test_utils()
+    # test_vector()
+    # test_electrostatics()
+    # test_utils()
+    test_linear_algebra()
 
 if __name__ == '__main__':
     main()
