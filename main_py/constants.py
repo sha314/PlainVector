@@ -15,6 +15,9 @@ mass_of_electron=9.10938356 # in kg
 mass_of_electron_factor=1e-31
 mass_of_electron_full = mass_of_electron * mass_of_electron_factor
 
+mass_of_proton=1.6726 # in kg
+mass_of_proton_factor=1e-27
+mass_of_proton_full = mass_of_proton * mass_of_proton_factor
 
 charge_of_electron=-1.60217662 # in coulombs
 charge_of_electron_magnitude=abs(charge_of_electron)

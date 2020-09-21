@@ -172,6 +172,8 @@ class Vector:
             pass
         return Vector(out_vec)
 
+    def toList(self):
+        return self.vec
 
 def test():
     vec1 = Vector([3, 4])
