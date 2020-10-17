@@ -7,6 +7,38 @@ class Vector:
     def __init__(self, vec_a):
         self.vec = vec_a
         self.len = len(vec_a)
+
+        # If any transformation make an element of a vector smaller than `self.orders_of_mag` then it will be considered as zero
+        self.orders_of_mag = 1e-6
+        pass
+
+    def find_smallest_elm(self, vec=None):
+        if vec is None:
+            aaTmp = self.vec
+        else:
+            aaTmp = vec
+            pass
+        oom = None
+        for elm in aaTmp:
+            if (oom is None) or (oom < abs(elm)):
+                oom = abs(elm)
+                pass
+
+        return oom
+
+    def convert_due_to_orders_of_mag(self, smallest_i, vec2=None):
+        if vec2 is None:
+            vecttr = self.vec
+            pass
+        else:
+            vecttr = vec2
+            pass
+        for i in range(len(vecttr)):
+            if abs(vecttr[i]) < self.orders_of_mag:
+                print(i, "-th Element will be converted from ", vecttr[i], " to ", 0)
+                vecttr[i] = 0
+                pass
+        return vecttr
         pass
 
     def __add__(self, other):
@@ -175,6 +207,38 @@ class Vector:
     def toList(self):
         return self.vec
 
+    def rotate2D(self, angle, in_radian=False, in_place=False):
+        #"""
+        #rotates a 2d vector by given angle
+        #:param angle:
+        #:param in_radian: if the angle is in radian then it must be True
+        #:param in_place:
+        #:return: New vector if `in_place` is True
+        #"""
+        if not in_radian:
+            angle = math.radians(angle)
+            pass
+        # counter clockwise rotation from +x axis
+        rotation_matrix = [[math.cos(angle), -math.sin(angle)],
+                           [math.sin(angle), math.cos(angle)]]
+
+        r_p_components = []
+        for i in range(self.len):
+            R_row = Vector(rotation_matrix[i])
+            temp = R_row.dot(self)
+            print(temp)
+            r_p_components.append(temp)
+            pass
+        orders_of_mag_i = self.find_smallest_elm()
+        r_p_components = self.convert_due_to_orders_of_mag(orders_of_mag_i, r_p_components)
+
+        if in_place:
+            print("In place assignment")
+            self.vec = r_p_components
+            pass
+        return Vector(r_p_components)
+
+
 def test():
     vec1 = Vector([3, 4])
     vec2 = Vector([4, 3])
@@ -227,3 +291,11 @@ def test():
     print("vec 3 ", vec3)
     vec3 = Vector.crossProduct_v2(vec1, vec2)
     print("vec 3 ", vec3)
+
+
+def test_rotate2D():
+    vec1 = Vector([1, 0])
+    print(vec1.rotate2D(30))
+    print(vec1.rotate2D(45))
+    print(vec1.rotate2D(60))
+    print(vec1.rotate2D(90))

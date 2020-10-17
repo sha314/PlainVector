@@ -2,7 +2,9 @@
 def test_vector():
     from main_py import vector
     # import vector
-    vector.test()
+    # vector.test()
+    vector.test_rotate2D()
+    pass
 
 
 def test_electrostatics():
@@ -25,10 +27,11 @@ def test_linear_algebra():
 
 
 def main():
-    # test_vector()
+    test_vector()
     # test_electrostatics()
     # test_utils()
-    test_linear_algebra()
+    # test_linear_algebra()
+
 
 if __name__ == '__main__':
     main()
