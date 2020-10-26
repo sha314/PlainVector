@@ -2,8 +2,9 @@
 def test_vector():
     from main_py import vector
     # import vector
-    # vector.test()
+    vector.test()
     vector.test_rotate2D()
+    vector.test_orders_of_mag()
     pass
 
 

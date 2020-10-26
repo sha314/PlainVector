@@ -1,7 +1,9 @@
 import math
 
+
 def levi_civita(i, j, k):
     return (i-j)*(j-k)*(k-i)/2
+
 
 class Vector:
     def __init__(self, vec_a):
@@ -20,13 +22,20 @@ class Vector:
             pass
         oom = None
         for elm in aaTmp:
-            if (oom is None) or (oom < abs(elm)):
+            if (oom is None) or (abs(elm) > oom):
                 oom = abs(elm)
                 pass
 
         return oom
 
-    def convert_due_to_orders_of_mag(self, smallest_i, vec2=None):
+    def reset_orders_of_mag(self, vec):
+        for elm in vec:
+            if abs(elm) < self.orders_of_mag:
+                self.orders_of_mag = abs(elm)
+            pass
+        pass
+
+    def convert_due_to_orders_of_mag(self, vec2=None):
         if vec2 is None:
             vecttr = self.vec
             pass
@@ -34,7 +43,7 @@ class Vector:
             vecttr = vec2
             pass
         for i in range(len(vecttr)):
-            if abs(vecttr[i]) < self.orders_of_mag:
+            if self.orders_of_mag > abs(vecttr[i]):
                 print(i, "-th Element will be converted from ", vecttr[i], " to ", 0)
                 vecttr[i] = 0
                 pass
@@ -49,6 +58,9 @@ class Vector:
         for i in range(self.len):
             vec_c.append(self.vec[i] + other.vec[i])
             pass
+        self.reset_orders_of_mag(self.vec)
+        self.reset_orders_of_mag(other.vec)
+        vec_c = self.convert_due_to_orders_of_mag(vec_c)
         return Vector(vec_c)
 
     def __sub__(self, other):
@@ -59,6 +71,9 @@ class Vector:
         for i in range(self.len):
             vec_c.append(self.vec[i] - other.vec[i])
             pass
+        self.reset_orders_of_mag(self.vec)
+        self.reset_orders_of_mag(other.vec)
+        vec_c = self.convert_due_to_orders_of_mag(vec_c)
         return Vector(vec_c)
 
     def __mul__(self, number):
@@ -230,7 +245,7 @@ class Vector:
             r_p_components.append(temp)
             pass
         orders_of_mag_i = self.find_smallest_elm()
-        r_p_components = self.convert_due_to_orders_of_mag(orders_of_mag_i, r_p_components)
+        r_p_components = self.convert_due_to_orders_of_mag(r_p_components)
 
         if in_place:
             print("In place assignment")
@@ -299,3 +314,10 @@ def test_rotate2D():
     print(vec1.rotate2D(45))
     print(vec1.rotate2D(60))
     print(vec1.rotate2D(90))
+
+
+def test_orders_of_mag():
+    print("test_orders_of_mag**********")
+    vec1 = Vector([1e-7, 1e-9])
+    vec2 = Vector([1e-2, 1e-9])
+    print(vec1 + vec2)
