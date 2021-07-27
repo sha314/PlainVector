@@ -30,7 +30,7 @@ class Vector:
 
     def reset_orders_of_mag(self, vec):
         for elm in vec:
-            if abs(elm) < self.orders_of_mag:
+            if self.orders_of_mag > abs(elm):
                 self.orders_of_mag = abs(elm)
             pass
         pass
@@ -321,3 +321,8 @@ def test_orders_of_mag():
     vec1 = Vector([1e-7, 1e-9])
     vec2 = Vector([1e-2, 1e-9])
     print(vec1 + vec2)
+    
+if __name__ == '__main__':
+    test()
+    test_rotate2D()
+    test_orders_of_mag()
