@@ -1,12 +1,53 @@
 import math
 
+
 def levi_civita(i, j, k):
     return (i-j)*(j-k)*(k-i)/2
+
 
 class Vector:
     def __init__(self, vec_a):
         self.vec = vec_a
         self.len = len(vec_a)
+
+        # If any transformation make an element of a vector smaller than `self.orders_of_mag` then it will be considered as zero
+        self.orders_of_mag = 1e-6
+        pass
+
+    def find_smallest_elm(self, vec=None):
+        if vec is None:
+            aaTmp = self.vec
+        else:
+            aaTmp = vec
+            pass
+        oom = None
+        for elm in aaTmp:
+            if (oom is None) or (abs(elm) > oom):
+                oom = abs(elm)
+                pass
+
+        return oom
+
+    def reset_orders_of_mag(self, vec):
+        for elm in vec:
+            if abs(elm) < self.orders_of_mag:
+                self.orders_of_mag = abs(elm)
+            pass
+        pass
+
+    def convert_due_to_orders_of_mag(self, vec2=None):
+        if vec2 is None:
+            vecttr = self.vec
+            pass
+        else:
+            vecttr = vec2
+            pass
+        for i in range(len(vecttr)):
+            if self.orders_of_mag > abs(vecttr[i]):
+                print(i, "-th Element will be converted from ", vecttr[i], " to ", 0)
+                vecttr[i] = 0
+                pass
+        return vecttr
         pass
 
     def __add__(self, other):
@@ -17,6 +58,9 @@ class Vector:
         for i in range(self.len):
             vec_c.append(self.vec[i] + other.vec[i])
             pass
+        self.reset_orders_of_mag(self.vec)
+        self.reset_orders_of_mag(other.vec)
+        vec_c = self.convert_due_to_orders_of_mag(vec_c)
         return Vector(vec_c)
 
     def __sub__(self, other):
@@ -27,6 +71,9 @@ class Vector:
         for i in range(self.len):
             vec_c.append(self.vec[i] - other.vec[i])
             pass
+        self.reset_orders_of_mag(self.vec)
+        self.reset_orders_of_mag(other.vec)
+        vec_c = self.convert_due_to_orders_of_mag(vec_c)
         return Vector(vec_c)
 
     def __mul__(self, number):
@@ -172,6 +219,40 @@ class Vector:
             pass
         return Vector(out_vec)
 
+    def toList(self):
+        return self.vec
+
+    def rotate2D(self, angle, in_radian=False, in_place=False):
+        #"""
+        #rotates a 2d vector by given angle
+        #:param angle:
+        #:param in_radian: if the angle is in radian then it must be True
+        #:param in_place:
+        #:return: New vector if `in_place` is True
+        #"""
+        if not in_radian:
+            angle = math.radians(angle)
+            pass
+        # counter clockwise rotation from +x axis
+        rotation_matrix = [[math.cos(angle), -math.sin(angle)],
+                           [math.sin(angle), math.cos(angle)]]
+
+        r_p_components = []
+        for i in range(self.len):
+            R_row = Vector(rotation_matrix[i])
+            temp = R_row.dot(self)
+            print(temp)
+            r_p_components.append(temp)
+            pass
+        orders_of_mag_i = self.find_smallest_elm()
+        r_p_components = self.convert_due_to_orders_of_mag(r_p_components)
+
+        if in_place:
+            print("In place assignment")
+            self.vec = r_p_components
+            pass
+        return Vector(r_p_components)
+
 
 def test():
     vec1 = Vector([3, 4])
@@ -225,3 +306,18 @@ def test():
     print("vec 3 ", vec3)
     vec3 = Vector.crossProduct_v2(vec1, vec2)
     print("vec 3 ", vec3)
+
+
+def test_rotate2D():
+    vec1 = Vector([1, 0])
+    print(vec1.rotate2D(30))
+    print(vec1.rotate2D(45))
+    print(vec1.rotate2D(60))
+    print(vec1.rotate2D(90))
+
+
+def test_orders_of_mag():
+    print("test_orders_of_mag**********")
+    vec1 = Vector([1e-7, 1e-9])
+    vec2 = Vector([1e-2, 1e-9])
+    print(vec1 + vec2)

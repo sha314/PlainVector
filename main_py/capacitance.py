@@ -1,11 +1,11 @@
 from main_py.constants import *
 
 
-def series_capacitance(C1, C2, order=1):
+def series_capacitance(C1, C2, order=1.):
     return C1*C2*order/(C1 + C2)
 
 
-def parallel_capacitance(C1, C2, order=1):
+def parallel_capacitance(C1, C2, order=1.):
     return (C1 + C2) * order
 
 
