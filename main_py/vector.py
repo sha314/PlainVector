@@ -10,6 +10,8 @@ class Vector:
         self.vec = vec_a
         if type(vec_a) is Vector:
             self.vec = vec_a.vec
+        if type(self.vec) is not list or type(self.vec) is not tuple:
+            print("Error : __init__")
         self.len = len(vec_a)
 
         # If any transformation make an element of a vector smaller than `self.orders_of_mag` then it will be considered as zero
