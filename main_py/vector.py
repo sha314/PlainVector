@@ -8,6 +8,8 @@ def levi_civita(i, j, k):
 class Vector:
     def __init__(self, vec_a):
         self.vec = vec_a
+        if type(vec_a) is Vector:
+            self.vec = vec_a.vec
         self.len = len(vec_a)
 
         # If any transformation make an element of a vector smaller than `self.orders_of_mag` then it will be considered as zero
@@ -306,6 +308,10 @@ def test():
     print("vec 3 ", vec3)
     vec3 = Vector.crossProduct_v2(vec1, vec2)
     print("vec 3 ", vec3)
+
+    print("Vector as argument of Vector")
+    vec3 = Vector(vec3)
+
 
 
 def test_rotate2D():
