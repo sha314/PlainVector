@@ -134,6 +134,24 @@ def test3():
     print(solns)
     print("actual solutions x= ", 0.183954, " y= ", 0.0700214)
 
+def test4():
+    R2 = 5
+    R3 = 10
+    R10 = 7
+    V1 = 2
+    V2 = 3
+    V3 = 5
+    eqn3 = Vector([1, -1, -1, 0])
+    eqn1 = Vector([-R2, 0, -R3, V3 - V1])
+    eqn2 = Vector([0, -R10, R3, -V3 - V2])
+    print("before ")
+    print(eqn1)
+    print(eqn2)
+    print(eqn3)
+    solns = LinearAlg.solve_eqn([eqn1, eqn2, eqn3])
+    print(solns)
+    print("actual solutions x= ", 0.187096774193548, " y= ", 0.580645161290323, " z= ", -0.393548387096774)
+
 def test():
     test1()
     test2()
