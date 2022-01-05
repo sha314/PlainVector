@@ -36,23 +36,30 @@ class LinearAlg:
         num_eqn = len(equations)  # number of equation
         zero_essentially = LinearAlg.find_lowest_order(equations)
         # print("zero = ", zero_essentially)
+        assert zero_essentially >= 0
         for row in range(num_eqn):
             # print(">>>>>>>>>>>eqn ", row)
             col, pivot = LinearAlg.choose_pivot(equations[row])
+            # print("pivot ", pivot)
             equations[row] /= pivot  # make the pivot 1
-            # print(equations[row])
+            # print("ROW eqn [", row, "] = ", equations[row])
             equations[row] = LinearAlg.apply_zero(equations[row].toList(), zero_essentially)
             # print(equations[row])
             for j in range(num_eqn):
                 if row == j:
                     continue
                 tmp = equations[j][col]
-                # print("before ", equations[j])
+                # print("before eqn[", j, "] = ", equations[j])
                 # print("operation => eqn[", j, "] = eqn[", j , "] - eqn[", row ,"] * (", tmp, ")")
                 equations[j] = equations[j] - equations[row]*tmp
+                # print("after eqn[", j, "] = ", equations[j])
                 equations[j] = LinearAlg.apply_zero(equations[j].toList(), zero_essentially)
-                # print("after ", equations[j])
+                # print("apply zero after eqn[", j, "] = ", equations[j])
                 pass
+            # print("all eqn")
+            # for kk in range(num_eqn):
+            #     print(equations[kk])
+            pass
 
         solutions_a = []
         for row in range(num_eqn):
@@ -83,7 +90,7 @@ class LinearAlg:
                 pass
             pass
         # print(numbersss)
-        return (numbersss[0] / numbersss[1])*1e-6
+        return abs((numbersss[0] / numbersss[1])*1e-6)
         pass
 
     @staticmethod
@@ -152,7 +159,35 @@ def test4():
     print(solns)
     print("actual solutions x= ", 0.187096774193548, " y= ", 0.580645161290323, " z= ", -0.393548387096774)
 
+def test5():
+
+    R1, R2, R3, R4, R5, R6, R7, E1, E2, E3 = 8, 8, 2, 2, 12, 2, 4, 10.0, 12.0, 12.0
+    R1, R2, R3, R4, R5, R6, R7 = R1 * 1000, R2 * 1000, R3 * 1000, R4 * 1000, R5 * 1000, R6 * 1000, R7 * 1000
+
+    R8 = 1 / (1 / R4 + 1 / R5)
+    R9 = 1 / (1 / R6 + 1 / R7)
+    R10 = R8 + R9
+
+
+    eqn3 = Vector([1, -1, -1, 0])
+    eqn1 = Vector([R2, 0, R3, -E3 + E1])
+    eqn2 = Vector([0, R10, -R3, E3 + E2])
+
+
+    print("before ")
+    print(eqn1)
+    print(eqn2)
+    print(eqn3)
+    solns = LinearAlg.solve_eqn([eqn1, eqn2, eqn3])
+    print(solns)
+    print("actual solutions x= ", 8.15573770491803e-7, " y= ", 5.07786885245902e-6, " z= ", -4.26229508196721e-6)
+    assert abs(solns[0]) < 1
+    assert abs(solns[1]) < 1
+    assert abs(solns[2]) < 1
+
 def test():
     test1()
     test2()
     test3()
+    test4()
+    test5()
